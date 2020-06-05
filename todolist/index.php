@@ -1,11 +1,5 @@
-<?php require (__DIR__. "/includes/classes.php");?>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
-  <link rel="stylesheet" href="style.css" type="text/css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-  <title></title>
-</head>
+<?php require(__DIR__."/includes/header.php");?>
 
 <body>
   <div id="page-wrap">
@@ -17,38 +11,52 @@
       <noscript>This site just doesn't work, period, without JavaScript</noscript>
 
       <ul id="list" class="ui-sortable">
-     <?php  $allcities = $obj->viewall();
-        foreach($allcities as $worldcities){
-            $id = $worldcities['id'];
-            $text = $worldcities['text'];
-            $color = $worldcities['color'];
-    ?>
-        <li color="1" class="colorBlue" rel="<?php echo $id;?>" id="<?php echo $id;?>">
-          <span id="2listitem" title="Double-click to edit..." style="opacity: 1;"><?php echo $text;?></span>
+      <?php 
+          $del_e="";
+          $del_s="";
+          $alllist = selectall();
+          $count="";
+          foreach($alllist as $data){
+            
+            $text = $data['text'];
+            $id = $data['id'];
+            $color = $data['color'];
+            $status = $data['status'];
+            $count++;
+          
+        ?>
+        <li color="1" class="<?php echo $color;?>" rel="<?php echo $id;?>" id="<?php echo $id;?>">
+      
+         <?php if($status == "1"){
+           $del_s="<del>";
+           $del_e="</del>";
+         }else{
+          $del_s="";
+          $del_e="";
+         }?>
+         <?php echo $del_s;?><span id="2listitem" title="Double-click to edit..." style="opacity: 1;"><?php echo $text;?></span></del><?php echo $del_e;?>
 
-          <div class="draggertab tab"></div>
+          <div class="draggertab tab" rel="<?php echo $id;?>"></div>
 
           <div class="colortab tab"></div>
-
           <div class="deletetab tab" style="width: 44px; display: block; right: -64px;">
           </div>
-
           <div class="donetab tab"></div>
         </li>
-        <?php } ?>
-
+          <?php } ?>
       </ul>
 	  <br />
 
-      <form action="" id="add-new" method="post">
+      <form  id="add-new" method="post">
         <input type="text" id="new-list-item-text" name="new-list-item-text" />
-        
-        <a id="add-new-submit" class="button" href="javascript:;">Add</a>
+        <a href="jacascript:;" id="add-new-submit" value="Add" class="button" >Add</a>
       </form>
 
       <div class="clear"></div>
     </div>
   </div>
 </body>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min_1.js"></script>
 <script src="js/customjs.js"></script>
 </html>
